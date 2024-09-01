@@ -72,7 +72,7 @@ class BottomSheetWidget extends StatelessWidget {
                       final doc = documentItems[index];
                       return ListTile(
                         leading: Image.asset(
-                          doc.type == FileType.pdf ? 'assets/pdf.png' : 'assets/xls.png',
+                          doc.type == FileType.pdf ? 'assets/images/pdf.png' : 'assets/images/xls.png',
                           width: 40,
                           height: 40,
                           fit: BoxFit.cover,

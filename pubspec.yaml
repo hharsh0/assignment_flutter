@@ -64,9 +64,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/dark_mode.json
-    - assets/pdf.png
-    - assets/xls.png
+    - assets/json/dark_mode.json
+    - assets/images/pdf.png
+    - assets/images/xls.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

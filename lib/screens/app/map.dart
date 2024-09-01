@@ -24,7 +24,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _loadMapStyles() async {
-    _darkMapStyle = await rootBundle.loadString('assets/dark_mode.json');
+    _darkMapStyle = await rootBundle.loadString('assets/json/dark_mode.json');
     if (mapController != null) {
       mapController!.setMapStyle(_darkMapStyle);
     }
