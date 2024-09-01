@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/models/document_item.dart';
+import 'package:project/data/dummy.dart';
 
 class BottomSheetWidget extends StatelessWidget {
   const BottomSheetWidget({super.key});
@@ -30,69 +32,29 @@ class BottomSheetWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: ListView(
+                child: ListView.builder(
                   controller: scrollController,
-                  children: <Widget>[
-                    ListTile(
-                      title: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Domni docs',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22,
-                                  ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.arrow_forward_ios),
-                              color: Colors.white,
-                              iconSize: 20,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    ListTile(
+                  itemCount: documentItems.length,
+                  itemBuilder: (context, index) {
+                    final doc = documentItems[index];
+
+                    return ListTile(
                       leading: Image.asset(
-                        'assets/pdf.png',
+                        doc.type == FileType.pdf ? 'assets/pdf.png' : 'assets/xls.png',
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,
                       ),
-                      title: const Text('100 Martinique Ave Title',
-                          style: TextStyle(color: Colors.white)),
-                      subtitle: const Text('Opened Dec 4, 2023',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                    ListTile(
-                      leading: Image.asset(
-                        'assets/pdf.png',
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
+                      title: Text(
+                        doc.title,
+                        style: const TextStyle(color: Colors.white),
                       ),
-                      title: const Text('Chase Bank Statement - 2023',
-                          style: TextStyle(color: Colors.white)),
-                      subtitle: const Text('Opened Dec 3, 2023',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                    ListTile(
-                      leading: Image.asset(
-                        'assets/xls.png',
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
+                      subtitle: Text(
+                        'Opened ${doc.lastDateOpened}',
+                        style: const TextStyle(color: Colors.white),
                       ),
-                      title: const Text('Backyard Remodel Renderings',
-                          style: TextStyle(color: Colors.white)),
-                      subtitle: const Text('Opened Nov 11, 2023',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
+                    );
+                  },
                 ),
               ),
             ],
