@@ -12,52 +12,86 @@ class BottomSheetWidget extends StatelessWidget {
       minChildSize: 0.1,
       maxChildSize: 0.8,
       builder: (context, scrollController) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Color(0xFF26292d),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0),
+        return GestureDetector(
+          onVerticalDragUpdate: (details) {
+            scrollController.jumpTo(scrollController.offset - details.delta.dy);
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color(0xFF26292d),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
             ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                width: 40,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: Colors.grey[600],
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: documentItems.length,
-                  itemBuilder: (context, index) {
-                    final doc = documentItems[index];
-
-                    return ListTile(
-                      leading: Image.asset(
-                        doc.type == FileType.pdf ? 'assets/pdf.png' : 'assets/xls.png',
+            child: CustomScrollView(
+              controller: scrollController,
+              slivers: <Widget>[
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      // Drag handle
+                      Container(
+                        margin: const EdgeInsets.only(top: 8.0),
                         width: 40,
-                        height: 40,
-                        fit: BoxFit.cover,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[600],
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                       ),
-                      title: Text(
-                        doc.title,
-                        style: const TextStyle(color: Colors.white),
+                      // Header Container
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Domni docs',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.arrow_forward_ios),
+                              color: Colors.white,
+                              iconSize: 20,
+                            ),
+                          ],
+                        ),
                       ),
-                      subtitle: Text(
-                        'Opened ${doc.lastDateOpened}',
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    );
-                  },
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final doc = documentItems[index];
+                      return ListTile(
+                        leading: Image.asset(
+                          doc.type == FileType.pdf ? 'assets/pdf.png' : 'assets/xls.png',
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(
+                          doc.title,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        subtitle: Text(
+                          'Opened ${doc.lastDateOpened}',
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      );
+                    },
+                    childCount: documentItems.length,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

@@ -19,10 +19,8 @@ class _LoginScreenState extends State<LoginScreen> {
       print('Email: ${_emailController.text}');
       print('Password: ${_passwordController.text}');
       
-      // Trigger the login using the Riverpod provider
       ref.read(authProvider.notifier).login();
 
-      // Clear the fields
       _emailController.clear();
       _passwordController.clear();
     }
